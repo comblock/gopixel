@@ -1,8 +1,9 @@
 package gopixel
 
 import (
-	"encoding/json"
 	"fmt"
+
+	json "github.com/mailru/easyjson"
 
 	"errors"
 
@@ -13,10 +14,7 @@ import (
 func (client *Client) Uuid(name string) (string, error) {
 	data, err := client.get(fmt.Sprintf("api.mojang.com/users/profiles/minecraft/%v", name))
 
-	var mojangPlayer struct {
-		Name string `json:"name"`
-		ID   string `json:"id"`
-	}
+	var mojangPlayer structs.MojangPlayer
 
 	if err != nil {
 		return "", err

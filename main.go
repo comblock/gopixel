@@ -9,17 +9,17 @@ import (
 
 type Client struct {
 	Key     string
-	Retries int
+	Retries uint
 }
 
 // Returns a client object
-func NewClient(key string, retries int) *Client {
+func NewClient(key string, retries uint) *Client {
 	return &Client{Key: key, Retries: retries}
 }
 
 // Internal function to handle http GET requests
 func (client *Client) get(url string) ([]byte, error) {
-	for i := 0; i < client.Retries; i++ {
+	for i := 0; i < int(client.Retries)+1; i++ {
 		resp, err := http.Get("https://" + url)
 
 		if err != nil {

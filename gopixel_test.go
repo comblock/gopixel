@@ -13,7 +13,7 @@ import (
 // The config struct with all of the required variables
 type Config struct {
 	Key                 string `json:"key"`
-	Retries             int    `json:"retries"`
+	Retries             uint   `json:"retries"`
 	Player              string `json:"player"`
 	SkyblockProfile     string `json:"skyblock_profile"`
 	RankedSkywarsPlayer string `json:"ranked_skywars_player"`

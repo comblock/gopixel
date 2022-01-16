@@ -1,9 +1,10 @@
 package gopixel
 
 import (
-	"encoding/json"
 	"fmt"
 	"sync"
+
+	json "github.com/mailru/easyjson"
 
 	"errors"
 
