@@ -22,8 +22,8 @@ type Config struct {
 	OutputFile          string `json:"output_file"`
 }
 
-func getConfig() Config {
-	var config Config
+func getConfig() *Config {
+	var config *Config
 	bytes, err := os.ReadFile("config.json")
 
 	if err != nil {
@@ -38,7 +38,7 @@ func getConfig() Config {
 }
 
 var output *os.File
-var config Config = getConfig()
+var config *Config = getConfig()
 var client *Client = NewClient(config.Key, config.Retries)
 
 func init() {

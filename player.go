@@ -27,8 +27,8 @@ func (client *Client) Uuid(name string) (string, error) {
 }
 
 // Method to get the friends of a player
-func (client *Client) Friends(name string) (structs.Friends, error) {
-	var friends structs.Friends
+func (client *Client) Friends(name string) (*structs.Friends, error) {
+	var friends *structs.Friends = new(structs.Friends)
 
 	uuid, err := client.Uuid(name)
 
@@ -41,7 +41,7 @@ func (client *Client) Friends(name string) (structs.Friends, error) {
 		return friends, err
 	}
 
-	err = json.Unmarshal(data, &friends)
+	err = json.Unmarshal(data, friends)
 
 	if !friends.Success {
 		err = errors.New(friends.Cause)
@@ -51,8 +51,8 @@ func (client *Client) Friends(name string) (structs.Friends, error) {
 }
 
 // Method to get a player's status
-func (client *Client) PlayerStatus(name string) (structs.PlayerStatus, error) {
-	var playerStatus structs.PlayerStatus
+func (client *Client) PlayerStatus(name string) (*structs.PlayerStatus, error) {
+	var playerStatus *structs.PlayerStatus = new(structs.PlayerStatus)
 
 	uuid, err := client.Uuid(name)
 
@@ -65,7 +65,7 @@ func (client *Client) PlayerStatus(name string) (structs.PlayerStatus, error) {
 		return playerStatus, err
 	}
 
-	err = json.Unmarshal(data, &playerStatus)
+	err = json.Unmarshal(data, playerStatus)
 
 	if !playerStatus.Success {
 		err = errors.New(playerStatus.Cause)
@@ -75,8 +75,8 @@ func (client *Client) PlayerStatus(name string) (structs.PlayerStatus, error) {
 }
 
 // Method to get the data of a player
-func (client *Client) PlayerData(name string) (structs.Player, error) {
-	var player structs.Player
+func (client *Client) PlayerData(name string) (*structs.Player, error) {
+	var player *structs.Player = new(structs.Player)
 
 	uuid, err := client.Uuid(name)
 
@@ -89,7 +89,7 @@ func (client *Client) PlayerData(name string) (structs.Player, error) {
 		return player, err
 	}
 
-	err = json.Unmarshal(data, &player)
+	err = json.Unmarshal(data, player)
 
 	if !player.Success {
 		err = errors.New(player.Cause)
@@ -99,8 +99,8 @@ func (client *Client) PlayerData(name string) (structs.Player, error) {
 }
 
 // Method to get the recently played games of a player
-func (client *Client) RecentGames(name string) (structs.RecentGames, error) {
-	var recentGames structs.RecentGames
+func (client *Client) RecentGames(name string) (*structs.RecentGames, error) {
+	var recentGames *structs.RecentGames = new(structs.RecentGames)
 
 	uuid, err := client.Uuid(name)
 	if err != nil {
@@ -112,7 +112,7 @@ func (client *Client) RecentGames(name string) (structs.RecentGames, error) {
 		return recentGames, err
 	}
 
-	err = json.Unmarshal(data, &recentGames)
+	err = json.Unmarshal(data, recentGames)
 
 	return recentGames, err
 }
