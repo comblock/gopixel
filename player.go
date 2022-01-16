@@ -1,7 +1,9 @@
 package gopixel
 
 import (
-	"encoding/json"
+	"fmt"
+
+	json "github.com/mailru/easyjson"
 
 	"errors"
 
@@ -10,12 +12,9 @@ import (
 
 // Function to convert a player name to uuid using the mojang api
 func (client *Client) Uuid(name string) (string, error) {
-	data, err := client.get("api.mojang.com/users/profiles/minecraft/" + name)
+	data, err := client.get(fmt.Sprintf("api.mojang.com/users/profiles/minecraft/%v", name))
 
-	var mojangPlayer struct {
-		Name string `json:"name"`
-		ID   string `json:"id"`
-	}
+	var mojangPlayer structs.MojangPlayer
 
 	if err != nil {
 		return "", err
@@ -28,21 +27,21 @@ func (client *Client) Uuid(name string) (string, error) {
 }
 
 // Method to get the friends of a player
-func (client *Client) Friends(name string) (structs.Friends, error) {
-	var friends structs.Friends
+func (client *Client) Friends(name string) (*structs.Friends, error) {
+	var friends *structs.Friends = new(structs.Friends)
 
 	uuid, err := client.Uuid(name)
 
 	if err != nil {
 		return friends, err
 	}
-	data, err := client.get("api.hypixel.net/friends?uuid=" + uuid + "&key=" + client.Key)
+	data, err := client.get(fmt.Sprintf("api.hypixel.net/friends?uuid=%v&key=%v", uuid, client.Key))
 
 	if err != nil {
 		return friends, err
 	}
 
-	err = json.Unmarshal(data, &friends)
+	err = json.Unmarshal(data, friends)
 
 	if !friends.Success {
 		err = errors.New(friends.Cause)
@@ -52,21 +51,21 @@ func (client *Client) Friends(name string) (structs.Friends, error) {
 }
 
 // Method to get a player's status
-func (client *Client) PlayerStatus(name string) (structs.PlayerStatus, error) {
-	var playerStatus structs.PlayerStatus
+func (client *Client) PlayerStatus(name string) (*structs.PlayerStatus, error) {
+	var playerStatus *structs.PlayerStatus = new(structs.PlayerStatus)
 
 	uuid, err := client.Uuid(name)
 
 	if err != nil {
 		return playerStatus, err
 	}
-	data, err := client.get("api.hypixel.net/status?uuid=" + uuid + "&key=" + client.Key)
+	data, err := client.get(fmt.Sprintf("api.hypixel.net/status?uuid=%v&key=%v", uuid, client.Key))
 
 	if err != nil {
 		return playerStatus, err
 	}
 
-	err = json.Unmarshal(data, &playerStatus)
+	err = json.Unmarshal(data, playerStatus)
 
 	if !playerStatus.Success {
 		err = errors.New(playerStatus.Cause)
@@ -76,21 +75,21 @@ func (client *Client) PlayerStatus(name string) (structs.PlayerStatus, error) {
 }
 
 // Method to get the data of a player
-func (client *Client) PlayerData(name string) (structs.Player, error) {
-	var player structs.Player
+func (client *Client) PlayerData(name string) (*structs.Player, error) {
+	var player *structs.Player = new(structs.Player)
 
 	uuid, err := client.Uuid(name)
 
 	if err != nil {
 		return player, err
 	}
-	data, err := client.get("api.hypixel.net/player?uuid=" + uuid + "&key=" + client.Key)
+	data, err := client.get(fmt.Sprintf("api.hypixel.net/player?uuid=%v&key=%v", uuid, client.Key))
 
 	if err != nil {
 		return player, err
 	}
 
-	err = json.Unmarshal(data, &player)
+	err = json.Unmarshal(data, player)
 
 	if !player.Success {
 		err = errors.New(player.Cause)
@@ -100,20 +99,20 @@ func (client *Client) PlayerData(name string) (structs.Player, error) {
 }
 
 // Method to get the recently played games of a player
-func (client *Client) RecentGames(name string) (structs.RecentGames, error) {
-	var recentGames structs.RecentGames
+func (client *Client) RecentGames(name string) (*structs.RecentGames, error) {
+	var recentGames *structs.RecentGames = new(structs.RecentGames)
 
 	uuid, err := client.Uuid(name)
 	if err != nil {
 		return recentGames, err
 	}
 
-	data, err := client.get("api.hypixel.net/recentgames?uuid=" + uuid + "&key=" + client.Key)
+	data, err := client.get(fmt.Sprintf("api.hypixel.net/recentgames?uuid=%v&key=%v", uuid, client.Key))
 	if err != nil {
 		return recentGames, err
 	}
 
-	err = json.Unmarshal(data, &recentGames)
+	err = json.Unmarshal(data, recentGames)
 
 	return recentGames, err
 }

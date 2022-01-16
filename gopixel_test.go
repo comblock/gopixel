@@ -13,7 +13,7 @@ import (
 // The config struct with all of the required variables
 type Config struct {
 	Key                 string `json:"key"`
-	Retries             int    `json:"retries"`
+	Retries             uint   `json:"retries"`
 	Player              string `json:"player"`
 	SkyblockProfile     string `json:"skyblock_profile"`
 	RankedSkywarsPlayer string `json:"ranked_skywars_player"`
@@ -22,8 +22,8 @@ type Config struct {
 	OutputFile          string `json:"output_file"`
 }
 
-func getConfig() Config {
-	var config Config
+func getConfig() *Config {
+	var config *Config
 	bytes, err := os.ReadFile("config.json")
 
 	if err != nil {
@@ -38,7 +38,7 @@ func getConfig() Config {
 }
 
 var output *os.File
-var config Config = getConfig()
+var config *Config = getConfig()
 var client *Client = NewClient(config.Key, config.Retries)
 
 func init() {

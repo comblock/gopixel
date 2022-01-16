@@ -5,6 +5,11 @@ type Parkour []struct {
 	TimeTook  float64 `json:"timeTook"`
 }
 
+type MojangPlayer struct {
+	Name string `json:"name"`
+	ID   string `json:"id"`
+}
+
 type Player struct {
 	Success bool   `json:"success"`
 	Cause   string `json:"cause"`
