@@ -19,7 +19,7 @@ func NewClient(key string, retries int) *Client {
 
 // Internal function to handle http GET requests
 func (client *Client) get(url string) ([]byte, error) {
-	for i := 0; i < 10; i++ {
+	for i := 0; i < client.Retries; i++ {
 		resp, err := http.Get("https://" + url)
 
 		if err != nil {
