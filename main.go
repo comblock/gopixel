@@ -1,10 +1,11 @@
 package gopixel
 
 import (
+	"bytes"
 	"errors"
-	"io/ioutil"
+	"fmt"
 
-	"net/http"
+	"github.com/valyala/fasthttp"
 )
 
 type Client struct {
@@ -20,19 +21,30 @@ func NewClient(key string, retries uint) *Client {
 // Internal function to handle http GET requests
 func (client *Client) get(url string) ([]byte, error) {
 	for i := 0; i < int(client.Retries)+1; i++ {
-		resp, err := http.Get("https://" + url)
+		req := fasthttp.AcquireRequest()
+		defer fasthttp.ReleaseRequest(req)
+		req.SetRequestURI("https://" + url)
 
+		req.Header.Set("Accept-Encoding", "gzip")
+
+		resp := fasthttp.AcquireResponse()
+		defer fasthttp.ReleaseResponse(resp)
+
+		err := fasthttp.Do(req, resp)
 		if err != nil {
-			return nil, nil
+			return make([]byte, 0), err
 		}
 
-		defer resp.Body.Close()
-
-		if string(resp.Status)[0] == 5 {
+		if fmt.Sprintf("%v", resp.StatusCode())[0] == '5' {
 			continue
 		}
-
-		body, err := ioutil.ReadAll(resp.Body)
+		contentEncoding := resp.Header.Peek("Content-Encoding")
+		var body []byte
+		if bytes.EqualFold(contentEncoding, []byte("gzip")) {
+			body, err = resp.BodyGunzip()
+		} else {
+			body = resp.Body()
+		}
 
 		return body, err
 	}
