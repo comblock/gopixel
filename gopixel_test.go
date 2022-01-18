@@ -27,7 +27,7 @@ func getConfig() *Config {
 	bytes, err := os.ReadFile("config.json")
 
 	if err != nil {
-		panic(err)
+		bytes = []byte(os.Getenv("CONFIG"))
 	}
 
 	err = json.Unmarshal(bytes, &config)
