@@ -11,11 +11,20 @@ import (
 type Client struct {
 	Key     string
 	Retries uint
+	Cache   *Cache
 }
 
 // Returns a client object
 func NewClient(key string, retries uint) *Client {
-	return &Client{Key: key, Retries: retries}
+	return &Client{
+		Key:     key,
+		Retries: retries,
+		Cache:   newCache(),
+	}
+}
+
+func (client *Client) ClearCache() {
+	client.Cache = newCache()
 }
 
 // Internal function to handle http GET requests

@@ -26,6 +26,8 @@ func (client *Client) Bazaar() (*structs.Bazaar, error) {
 		err = errors.New(bazaar.Cause)
 	}
 
+	client.Cache.Bazaar = bazaar
+
 	return bazaar, err
 }
 
@@ -67,6 +69,8 @@ func (client *Client) SkyblockActiveAuctions() (*structs.SkyblockActiveAuctions,
 	}
 
 	wg.Wait()
+
+	client.Cache.SkyblockActiveAuctions = auctions
 
 	return auctions, err
 }
@@ -184,6 +188,8 @@ func (client *Client) SkyblockNews() (*structs.SkyblockNews, error) {
 
 	err = json.Unmarshal(data, news)
 
+	client.Cache.SkyblockNews = news
+
 	return news, err
 }
 
@@ -202,6 +208,8 @@ func (client *Client) SkyblockProfile(profile string) (*structs.SkyblockProfile,
 	if !skyblockProfile.Success {
 		err = errors.New(skyblockProfile.Cause)
 	}
+
+	client.Cache.SkyblockProfile[profile] = skyblockProfile
 
 	return skyblockProfile, err
 }
@@ -227,6 +235,8 @@ func (client *Client) SkyblockProfiles(name string) (*structs.SkyblockProfiles, 
 	if !skyblockProfile.Success {
 		err = errors.New(skyblockProfile.Cause)
 	}
+
+	client.Cache.SkyblockProfiles[uuid] = skyblockProfile
 
 	return skyblockProfile, err
 }

@@ -95,6 +95,8 @@ func (client *Client) PlayerData(name string) (*structs.Player, error) {
 		err = errors.New(player.Cause)
 	}
 
+	client.Cache.Players[uuid] = player
+
 	return player, err
 }
 

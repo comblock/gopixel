@@ -303,3 +303,7 @@ func TestVanityCompanions(t *testing.T) {
 	}
 	spew.Fdump(output, companions)
 }
+
+func TestCache(t *testing.T) {
+	spew.Fdump(output, client.Cache)
+}

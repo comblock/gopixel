@@ -114,6 +114,8 @@ func (client *Client) Leaderboards() (*structs.Leaderboards, error) {
 
 	err = json.Unmarshal(data, leaderboards)
 
+	client.Cache.Leaderboards = leaderboards
+
 	return leaderboards, err
 }
 
