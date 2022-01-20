@@ -39,6 +39,8 @@ func (client *Client) GuildById(id string) (*structs.Guild, error) {
 		err = errors.New(guild.Cause)
 	}
 
+	client.Cache.Guilds[id] = guild
+
 	return guild, err
 }
 
@@ -56,6 +58,9 @@ func (client *Client) GuildByName(name string) (*structs.Guild, error) {
 	if !guild.Success {
 		err = errors.New(guild.Cause)
 	}
+
+	client.Cache.Guilds[guild.Data.ID] = guild
+
 	return guild, err
 }
 
@@ -77,6 +82,8 @@ func (client *Client) GuildByPlayer(player string) (*structs.Guild, error) {
 	if !guild.Success {
 		err = errors.New(guild.Cause)
 	}
+
+	client.Cache.Guilds[guild.Data.ID] = guild
 
 	return guild, err
 }
