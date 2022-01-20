@@ -63,8 +63,8 @@ func TestKeyData(t *testing.T) {
 	spew.Fdump(output, key)
 }
 
-func TestPlayerData(t *testing.T) {
-	player, err := client.PlayerData(config.Player)
+func TestPlayer(t *testing.T) {
+	player, err := client.Player(config.Player)
 	if err != nil {
 		t.Error(err)
 	}

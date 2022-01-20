@@ -75,7 +75,7 @@ func (client *Client) PlayerStatus(name string) (*structs.PlayerStatus, error) {
 }
 
 // Method to get the data of a player
-func (client *Client) PlayerData(name string) (*structs.Player, error) {
+func (client *Client) Player(name string) (*structs.Player, error) {
 	var player *structs.Player = new(structs.Player)
 
 	uuid, err := client.Uuid(name)
