@@ -174,6 +174,8 @@ func (client *Client) SkyblockItems() (*structs.SkyblockItems, error) {
 
 	err = json.Unmarshal(data, skyblockItems)
 
+	client.Cache.SkyblockItems = skyblockItems
+
 	return skyblockItems, err
 }
 
