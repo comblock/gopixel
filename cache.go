@@ -20,5 +20,6 @@ func newCache() *Cache {
 		SkyblockProfile:        make(map[string]*structs.SkyblockProfile),
 		SkyblockProfiles:       make(map[string]*structs.SkyblockProfiles),
 		SkyblockNews:           new(structs.SkyblockNews),
+		Leaderboards:           new(structs.Leaderboards),
 	}
 }
