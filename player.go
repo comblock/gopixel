@@ -71,6 +71,8 @@ func (client *Client) PlayerStatus(name string) (*structs.PlayerStatus, error) {
 		err = errors.New(playerStatus.Cause)
 	}
 
+	client.Cache.PlayerStatus[uuid] = playerStatus
+
 	return playerStatus, err
 }
 

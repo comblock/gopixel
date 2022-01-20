@@ -12,6 +12,7 @@ type Cache struct {
 	Leaderboards           *structs.Leaderboards
 	SkyblockItems          *structs.SkyblockItems
 	Guilds                 map[string]*structs.Guild
+	PlayerStatus           map[string]*structs.PlayerStatus
 }
 
 func newCache() *Cache {
@@ -25,5 +26,6 @@ func newCache() *Cache {
 		Leaderboards:           new(structs.Leaderboards),
 		SkyblockItems:          new(structs.SkyblockItems),
 		Guilds:                 make(map[string]*structs.Guild),
+		PlayerStatus:           make(map[string]*structs.PlayerStatus),
 	}
 }
