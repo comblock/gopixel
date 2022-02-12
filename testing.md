@@ -4,7 +4,7 @@ In order to test the package you need a config.json file that looks like this:
 ```jsonc
 {
 	"key": "",			// Your API key
-	"retries": 0			// The amount of times you want the program to retry after failing a get request
+	"retries": 0,			// The amount of times you want the program to retry after failing a get request
 	"player": "",			// The player for most methods that require a player
 	"skyblock_profile": "",		// The profile ID that is used to test SkyblockProfile
 	"ranked_skywars_player": "",	// This is to test the RankedSkywars method, it's seperate because not all players will have data
